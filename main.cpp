@@ -233,15 +233,26 @@ int main() {
 
 	// Add highScoreText to the game over screen and reposition, resize it
 
+	Text playAgainText;
+	playAgainText.setFont(font);
+	playAgainText.setString("Play Again");
+	playAgainText.setCharacterSize(50);
+	playAgainText.setFillColor(Color::White);
+	playAgainText.setOutlineThickness(1.0f);
+	playAgainText.setOutlineColor(Color::Red);
+	playAgainText.setOrigin(playAgainText.getLocalBounds().width / 2, playAgainText.getLocalBounds().height / 2);
+	playAgainText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 100));
+
+
 	Text backToMenuText;
 	backToMenuText.setFont(font);
 	backToMenuText.setString("Back to Menu");
-	backToMenuText.setCharacterSize(50);
+	backToMenuText.setCharacterSize(70);
 	backToMenuText.setFillColor(Color::White);
 	backToMenuText.setOutlineThickness(1.0f);
 	backToMenuText.setOutlineColor(Color::Red);
 	backToMenuText.setOrigin(backToMenuText.getLocalBounds().width / 2, backToMenuText.getLocalBounds().height / 2);
-	backToMenuText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 50));
+	backToMenuText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 150));
 
 
 	// ------------------------------------------------------- SPRITE OBJECTS -------------------------------------------------------
@@ -618,9 +629,11 @@ int main() {
 
             highScoreText.setCharacterSize(50);
             highScoreText.setOrigin(highScoreText.getLocalBounds().width / 2, highScoreText.getLocalBounds().height / 2);
-            highScoreText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 50));
+            highScoreText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 60));
 
-            backToMenuText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 100));
+			playAgainText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 120));
+
+            backToMenuText.setPosition(Vector2f(windowWidth / 2, windowHeight / 2 + 200));
 
 			angle = 0.0f;
 
@@ -634,6 +647,7 @@ int main() {
             window.draw(gameOverText);
             window.draw(yourScoreText);
             window.draw(highScoreText);
+			window.draw(playAgainText);
             window.draw(backToMenuText);
 
             window.display();
@@ -642,6 +656,24 @@ int main() {
                 isGameOver = false;
                 startScreen = true;
             }
+			// Play again
+            else if (Mouse::isButtonPressed(Mouse::Left) && playAgainText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                currentScore = 0;
+                bulletRemaining = bulletCount;
+                lives = 3;
+                frame = 1;
+                livesText.setString("Lives: " + to_string(lives));
+                player.setPosition(Vector2f(windowWidth / 2, windowHeight / 2));
+                player.setColor(Color::White);
+                bullets.clear();
+                asteroids.clear();
+
+                startScreen = false;
+                isGamePaused = false;
+                isGameRunning = true;
+                isGameOver = false;
+            }
+
         }
         frame++;
 		if (frame == 904) frame = 1;
