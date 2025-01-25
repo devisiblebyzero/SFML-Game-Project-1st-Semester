@@ -41,8 +41,8 @@ float asteroidScale = 0.f; // Scale of the asteroid (will be randomized later)
 float bulletSpeed = 700.0f; // Pixels per second
 
 // Window dimensions
-float windowWidth = 1920.0f; //static_cast<float>(VideoMode::getDesktopMode().width);
-float windowHeight = 1080.0f; // static_cast<float>(VideoMode::getDesktopMode().height);
+float windowWidth = static_cast<float>(VideoMode::getDesktopMode().width);
+float windowHeight = static_cast<float>(VideoMode::getDesktopMode().height);
 
 // Vectors
 vector<pair<Sprite, float>> asteroids;
@@ -62,7 +62,7 @@ int main() {
 
     srand(static_cast<unsigned int>(time(0)));
 
-    RenderWindow window(VideoMode(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight)), "Game Project", Style::Default);
+    RenderWindow window(VideoMode(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight)), "Game Project", Style::Fullscreen);
     window.setFramerateLimit(60);
 
     Font font; // Load font
