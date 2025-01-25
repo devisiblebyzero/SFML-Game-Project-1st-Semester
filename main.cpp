@@ -41,8 +41,8 @@ float asteroidScale = 0.f; // Scale of the asteroid (will be randomized later)
 float bulletSpeed = 700.0f; // Pixels per second
 
 // Window dimensions
-float windowWidth = static_cast<float>(VideoMode::getDesktopMode().width);
-float windowHeight = static_cast<float>(VideoMode::getDesktopMode().height);
+float windowWidth = 1920.0f; //static_cast<float>(VideoMode::getDesktopMode().width);
+float windowHeight = 1080.0f; // static_cast<float>(VideoMode::getDesktopMode().height);
 
 // Vectors
 vector<pair<Sprite, float>> asteroids;
@@ -62,7 +62,7 @@ int main() {
 
     srand(static_cast<unsigned int>(time(0)));
 
-    RenderWindow window(VideoMode(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight)), "Game Project", Style::Fullscreen);
+    RenderWindow window(VideoMode(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight)), "Game Project", Style::Default);
     window.setFramerateLimit(60);
 
     Font font; // Load font
@@ -380,6 +380,7 @@ int main() {
             // Quit game
             else if (Mouse::isButtonPressed(Mouse::Left) && quitText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
                 window.close();
+                return 0;
             }
 
             // Tutorial
@@ -431,7 +432,7 @@ int main() {
                 bullet.setRadius(5.0f);
                 bullet.setOutlineThickness(0.5f);
                 bullet.setOutlineColor(Color::Red);
-                bullet.setOrigin(Vector2f(bullet.getGlobalBounds().width / 2, bullet.getGlobalBounds().height / 2));
+                bullet.setOrigin(Vector2f(bullet.getLocalBounds().width / 2, bullet.getLocalBounds().height / 2));
                 bullet.setFillColor(Color(rand() % 256, rand() % 256, rand() % 256));
                 bullet.setPosition(Vector2f(playerPos.x, playerPos.y));
                 Vector2f bulletDirection(cos(radians), sin(radians));
@@ -453,10 +454,10 @@ int main() {
             // Spawn asteroids
             if (asteroidSpawnClock.getElapsedTime().asSeconds() > asteroidSpawnTime) {
                 int edge = rand() % 4;
-                if (edge == 0) asteroid.setPosition(Vector2f(static_cast<float>(rand() % static_cast<int>(windowWidth)), -20.0f)); // Top
-                else if (edge == 1) asteroid.setPosition(Vector2f(static_cast<float>(rand() % static_cast<int>(windowWidth)), windowHeight)); // Bottom
-                else if (edge == 2) asteroid.setPosition(Vector2f(-20.0f, static_cast<float>(rand() % static_cast<int>(windowHeight)))); // Left
-                else if (edge == 3) asteroid.setPosition(Vector2f(windowWidth, static_cast<float>(rand() % static_cast<int>(windowHeight)))); // Right
+                if (edge == 0) asteroid.setPosition(Vector2f(static_cast<float>(rand() % static_cast<int>(windowWidth)), -50.0f)); // Top
+                else if (edge == 1) asteroid.setPosition(Vector2f(static_cast<float>(rand() % static_cast<int>(windowWidth)), windowHeight + 50)); // Bottom
+                else if (edge == 2) asteroid.setPosition(Vector2f(-50.0f, static_cast<float>(rand() % static_cast<int>(windowHeight)))); // Left
+                else if (edge == 3) asteroid.setPosition(Vector2f(windowWidth + 50.0f, static_cast<float>(rand() % static_cast<int>(windowHeight)))); // Right
 
                 asteroidScale = static_cast<float>((rand() % 4 + 2)) / 10.0f;
                 asteroid.setScale(asteroidScale, asteroidScale);
